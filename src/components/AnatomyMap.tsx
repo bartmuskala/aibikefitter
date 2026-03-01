@@ -6,55 +6,56 @@ import { ZoomIn, ZoomOut, Maximize } from "lucide-react";
 import styles from "./AnatomyMap.module.css";
 import { useTranslation } from "react-i18next";
 
-// Highly precise anatomical nodes mapped to the muscle-system.svg illustration
-// (x,y are percentages from top left of the image)
+// Coords scaled for the 1304 x 3033 vertically stacked image
+// Anterior (Front) is on top (0% to ~50%)
+// Posterior (Back) is on bottom (~50% to 100%)
 const anatomyNodes = [
-    // --- Posterior (Back view) - Left side of image ---
-    { id: "Left Trapezius", x: 23, y: 18 },
-    { id: "Right Trapezius", x: 33, y: 18 },
-    { id: "Left Infraspinatus", x: 21, y: 24 },
-    { id: "Right Infraspinatus", x: 35, y: 24 },
-    { id: "Left Triceps Brachii", x: 19, y: 32 },
-    { id: "Right Triceps Brachii", x: 37, y: 32 },
-    { id: "Left Latissimus Dorsi", x: 25, y: 35 },
-    { id: "Right Latissimus Dorsi", x: 32, y: 35 },
-    { id: "Lower Back (Erector Spinae)", x: 28, y: 41 },
-    { id: "Left Gluteus Medius", x: 22, y: 46 },
-    { id: "Right Gluteus Medius", x: 34, y: 46 },
-    { id: "Left Gluteus Maximus", x: 23, y: 50 },
-    { id: "Right Gluteus Maximus", x: 34, y: 50 },
-    { id: "Left Hamstring (Biceps Femoris)", x: 24, y: 64 },
-    { id: "Right Hamstring (Biceps Femoris)", x: 33, y: 64 },
-    { id: "Left Gastrocnemius (Calf)", x: 22, y: 80 },
-    { id: "Right Gastrocnemius (Calf)", x: 35, y: 80 },
-    { id: "Left Soleus", x: 23, y: 86 },
-    { id: "Right Soleus", x: 34, y: 86 },
-    { id: "Left Achilles Tendon", x: 22, y: 92 },
-    { id: "Right Achilles Tendon", x: 35, y: 92 },
+    // --- Anterior (Front view) - Top Half ---
+    { id: "Neck (Sternocleidomastoid)", x: 50, y: 7 },
+    { id: "Left Front Deltoid", x: 62, y: 11 },
+    { id: "Right Front Deltoid", x: 38, y: 11 },
+    { id: "Left Pectoralis Major", x: 58, y: 14 },
+    { id: "Right Pectoralis Major", x: 42, y: 14 },
+    { id: "Left Biceps Brachii", x: 68, y: 19 },
+    { id: "Right Biceps Brachii", x: 32, y: 19 },
+    { id: "Rectus Abdominis (Abs)", x: 50, y: 22 },
+    { id: "Left External Oblique", x: 58, y: 23 },
+    { id: "Right External Oblique", x: 42, y: 23 },
+    { id: "Left Sartorius", x: 57, y: 31 },
+    { id: "Right Sartorius", x: 43, y: 31 },
+    { id: "Left Rectus Femoris (Quad)", x: 58, y: 35 },
+    { id: "Right Rectus Femoris (Quad)", x: 42, y: 35 },
+    { id: "Left Vastus Lateralis (Outer Quad)", x: 63, y: 36 },
+    { id: "Right Vastus Lateralis (Outer Quad)", x: 37, y: 36 },
+    { id: "Left Vastus Medialis (Inner Quad)", x: 54, y: 38 },
+    { id: "Right Vastus Medialis (Inner Quad)", x: 46, y: 38 },
+    { id: "Left Patellar Tendon", x: 56, y: 41 },
+    { id: "Right Patellar Tendon", x: 44, y: 41 },
+    { id: "Left Tibialis Anterior (Shin)", x: 56, y: 45 },
+    { id: "Right Tibialis Anterior (Shin)", x: 44, y: 45 },
 
-    // --- Anterior (Front view) - Right side of image ---
-    { id: "Neck (Sternocleidomastoid)", x: 74, y: 13 },
-    { id: "Left Front Deltoid", x: 80, y: 20 },
-    { id: "Right Front Deltoid", x: 67, y: 20 },
-    { id: "Left Pectoralis Major", x: 81, y: 24 },
-    { id: "Right Pectoralis Major", x: 65, y: 24 },
-    { id: "Left Biceps Brachii", x: 84, y: 30 },
-    { id: "Right Biceps Brachii", x: 62, y: 30 },
-    { id: "Rectus Abdominis (Abs)", x: 73, y: 36 },
-    { id: "Left External Oblique", x: 81, y: 38 },
-    { id: "Right External Oblique", x: 65, y: 38 },
-    { id: "Left Sartorius", x: 80, y: 51 },
-    { id: "Right Sartorius", x: 67, y: 51 },
-    { id: "Left Rectus Femoris (Quad)", x: 81, y: 60 },
-    { id: "Right Rectus Femoris (Quad)", x: 65, y: 60 },
-    { id: "Left Vastus Lateralis (Outer Quad)", x: 84, y: 62 },
-    { id: "Right Vastus Lateralis (Outer Quad)", x: 62, y: 62 },
-    { id: "Left Vastus Medialis (Inner Quad)", x: 77, y: 68 },
-    { id: "Right Vastus Medialis (Inner Quad)", x: 69, y: 68 },
-    { id: "Left Patellar Tendon", x: 80, y: 73 },
-    { id: "Right Patellar Tendon", x: 66, y: 73 },
-    { id: "Left Tibialis Anterior (Shin)", x: 80, y: 82 },
-    { id: "Right Tibialis Anterior (Shin)", x: 66, y: 82 },
+    // --- Posterior (Back view) - Bottom Half ---
+    { id: "Left Trapezius", x: 43, y: 58 },
+    { id: "Right Trapezius", x: 57, y: 58 },
+    { id: "Left Infraspinatus", x: 40, y: 61 },
+    { id: "Right Infraspinatus", x: 60, y: 61 },
+    { id: "Left Triceps Brachii", x: 32, y: 65 },
+    { id: "Right Triceps Brachii", x: 68, y: 65 },
+    { id: "Left Latissimus Dorsi", x: 42, y: 66 },
+    { id: "Right Latissimus Dorsi", x: 58, y: 66 },
+    { id: "Lower Back (Erector Spinae)", x: 50, y: 70 },
+    { id: "Left Gluteus Medius", x: 42, y: 72 },
+    { id: "Right Gluteus Medius", x: 58, y: 72 },
+    { id: "Left Gluteus Maximus", x: 44, y: 75 },
+    { id: "Right Gluteus Maximus", x: 56, y: 75 },
+    { id: "Left Hamstring (Biceps Femoris)", x: 44, y: 82 },
+    { id: "Right Hamstring (Biceps Femoris)", x: 56, y: 82 },
+    { id: "Left Gastrocnemius (Calf)", x: 44, y: 91 },
+    { id: "Right Gastrocnemius (Calf)", x: 56, y: 91 },
+    { id: "Left Soleus", x: 42, y: 94 },
+    { id: "Right Soleus", x: 58, y: 94 },
+    { id: "Left Achilles Tendon", x: 45, y: 97 },
+    { id: "Right Achilles Tendon", x: 55, y: 97 },
 ];
 
 export function AnatomyMap({
@@ -96,7 +97,7 @@ export function AnatomyMap({
                             <TransformComponent wrapperStyle={{ width: "100%", height: "100%" }}>
                                 <div className={styles.imageContainer}>
                                     <img
-                                        src="/muscle-system.svg"
+                                        src="/muscle-system.jpg"
                                         alt="High-Fidelity Muscular System Anatomy Map"
                                         className={styles.baseImage}
                                     />

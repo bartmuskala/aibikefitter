@@ -71,8 +71,8 @@
 .imageContainer {
     position: relative;
     /* Maintain fixed aspect ratio so percentage coordinates are perfectly stable */
-    width: 900px;
-    height: 1200px;
+    width: 600px;
+    height: 1395px;
     max-width: none;
     margin: 0 auto;
 }
