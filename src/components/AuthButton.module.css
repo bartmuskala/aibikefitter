@@ -1,0 +1,38 @@
+.authContainer {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.loginBtn,
+.dashboardBtn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0 4px 14px var(--accent-glow);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.loginBtn:hover,
+.dashboardBtn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+.logoutBtn {
+    background: transparent;
+    color: var(--foreground);
+    border: 1px solid var(--surface-border);
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.logoutBtn:hover {
+    background: var(--surface-border);
+}

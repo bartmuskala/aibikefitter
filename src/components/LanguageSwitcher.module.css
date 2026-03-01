@@ -1,0 +1,14 @@
+.langBtn {
+    background: var(--surface);
+    color: var(--foreground);
+    border: 1px solid var(--surface-border);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+}
+
+.langBtn:hover {
+    background: var(--surface-border);
+}

@@ -1,0 +1,125 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--foreground);
+}
+
+.editor {
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    .editor {
+        flex-direction: row;
+    }
+}
+
+.modelWrapper {
+    flex: 2;
+    min-width: 0;
+}
+
+.sidebar {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: max-content;
+}
+
+.sidebarTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--surface-border);
+    padding-bottom: 0.75rem;
+}
+
+.empty {
+    color: #888;
+    font-size: 0.9rem;
+    font-style: italic;
+    padding: 1rem 0;
+}
+
+.pointList {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.pointItem {
+    background: var(--background);
+    border: 1px solid var(--surface-border);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.remark {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 0.25rem;
+}
+
+.removeBtn {
+    background: transparent;
+    color: var(--error);
+    border: none;
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+.removeBtn:hover {
+    opacity: 0.8;
+}
+
+.adviceBtn {
+    margin-top: auto;
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 14px var(--accent-glow);
+}
+
+.adviceBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.adviceBtn:not(:disabled):hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+}
