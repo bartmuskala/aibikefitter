@@ -8,7 +8,7 @@ const resources = {
             "subtitle": "Professional AI-Powered Bike Fit Advice",
             "login_google": "Sign in with Google",
             "logout": "Sign out",
-            "select_pain_points": "Select your pain points on the 3D model",
+            "select_pain_points": "Select your pain points on the anatomy map",
             "pain_level": "Pain Severity (1-5)",
             "remarks_optional": "Remarks (optional)",
             "add_pain_point": "Add Pain Point",
@@ -22,7 +22,8 @@ const resources = {
             "chat_placeholder": "Ask a follow-up question...",
             "send": "Send",
             "saving": "Saving...",
-            "error": "An error occurred. Please try again."
+            "error": "An error occurred. Please try again.",
+            "click_muscle": "Click on a muscle or body part to add a pain point"
         }
     },
     nl: {
@@ -31,7 +32,7 @@ const resources = {
             "subtitle": "Professioneel AI-Gedreven Fietsafstellingsadvies",
             "login_google": "Aanmelden met Google",
             "logout": "Afmelden",
-            "select_pain_points": "Selecteer je pijnpunten op het 3D model",
+            "select_pain_points": "Selecteer je pijnpunten op de anatomische kaart",
             "pain_level": "Pijn Ernst (1-5)",
             "remarks_optional": "Opmerkingen (optioneel)",
             "add_pain_point": "Pijnpunt Toevoegen",
@@ -45,7 +46,8 @@ const resources = {
             "chat_placeholder": "Stel een vervolgvraag...",
             "send": "Verstuur",
             "saving": "Opslaan...",
-            "error": "Er is een fout opgetreden. Probeer het opnieuw."
+            "error": "Er is een fout opgetreden. Probeer het opnieuw.",
+            "click_muscle": "Klik op een spier of lichaamsdeel om een pijnpunt toe te voegen"
         }
     }
 };

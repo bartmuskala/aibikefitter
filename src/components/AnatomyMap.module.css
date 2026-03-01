@@ -1,148 +1,44 @@
 .container {
     width: 100%;
-    height: 70vh;
+    height: 60vh;
     background: var(--surface);
     border-radius: 1rem;
     border: 1px solid var(--surface-border);
-    position: relative;
     overflow: hidden;
     display: flex;
     flex-direction: column;
 }
 
-.controls {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    z-index: 10;
-    display: flex;
-    gap: 0.5rem;
-    background: var(--surface);
-    padding: 0.5rem;
-    border-radius: 0.75rem;
-    border: 1px solid var(--surface-border);
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-.controlBtn {
-    background: var(--background);
-    border: 1px solid var(--surface-border);
-    color: var(--foreground);
-    padding: 0.4rem 0.8rem;
-    border-radius: 0.375rem;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.controlBtn:hover {
-    background: var(--accent);
-    color: white;
-    border-color: var(--accent);
-}
-
 .mapWrapper {
     flex: 1;
-    position: relative;
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 2rem;
     background-color: var(--background);
-    /* Match app background instead of stark grey */
-    cursor: grab;
+    padding: 1rem;
+    overflow-y: auto;
 }
 
-.mapWrapper:active {
-    cursor: grabbing;
+.modelContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
 
-.imageContainer {
-    position: relative;
-    /* Fixed arbitrary aspect ratio size, scales automatically via ZoomPanPinch */
-    width: 900px;
-    height: 1000px;
-    max-width: none;
-}
-
-.baseImage {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    pointer-events: none;
-    border-radius: 0.5rem;
-}
-
-.node {
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    background-color: #facc15;
-    border: 3px solid white;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
-    opacity: 0.8;
-    z-index: 2;
-}
-
-.node:hover {
-    transform: translate(-50%, -50%) scale(1.6);
-    background-color: #3b82f6;
-    opacity: 1;
-    z-index: 10;
-    border-color: #fff;
-}
-
-.nodeSelected {
-    background-color: #ef4444;
-    border-color: #fff;
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.3);
-    animation: pulse 2s infinite;
-    z-index: 5;
-}
-
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.8);
-    }
-
-    70% {
-        box-shadow: 0 0 0 12px rgba(239, 68, 68, 0);
-    }
-
-    100% {
-        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
-    }
-}
-
-.tooltip {
-    position: absolute;
-    top: -35px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(15, 23, 42, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: white;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 13px;
+.modelLabel {
     font-weight: 600;
-    white-space: nowrap;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.2s;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    color: var(--foreground);
+    font-size: 1.1rem;
 }
 
-.node:hover .tooltip,
-.nodeSelected .tooltip {
-    opacity: 1;
+.instructions {
+    text-align: center;
+    color: var(--foreground);
+    padding: 1rem;
+    border-bottom: 1px solid var(--surface-border);
+    font-size: 0.95rem;
 }
