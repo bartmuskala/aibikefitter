@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
-import { BodyModel } from "@/components/BodyModel";
+import { AnatomyMap } from "@/components/AnatomyMap";
 import { PainInputModal, PainData } from "@/components/PainInputModal";
 
 export default function FitClient() {
@@ -60,7 +60,7 @@ export default function FitClient() {
 
             <div className={styles.editor}>
                 <div className={styles.modelWrapper}>
-                    <BodyModel
+                    <AnatomyMap
                         onPartClick={handlePartClick}
                         selectedParts={painPoints.map((p) => p.partId)}
                     />
@@ -69,7 +69,7 @@ export default function FitClient() {
                 <div className={styles.sidebar}>
                     <h2 className={styles.sidebarTitle}>Selected Pain Points</h2>
                     {painPoints.length === 0 ? (
-                        <p className={styles.empty}>No pain points selected. Click on the 3D body.</p>
+                        <p className={styles.empty}>No pain points selected. Click on the anatomy map.</p>
                     ) : (
                         <ul className={styles.pointList}>
                             {painPoints.map((p) => (
