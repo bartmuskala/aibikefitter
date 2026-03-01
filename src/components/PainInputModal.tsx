@@ -7,6 +7,7 @@ import styles from "./PainInputModal.module.css";
 export type PainData = {
     partId: string;
     level: number;
+    timing: string;
     remarks: string;
 };
 
@@ -21,10 +22,11 @@ export function PainInputModal({
 }) {
     const { t } = useTranslation();
     const [level, setLevel] = useState<number>(3);
+    const [timing, setTiming] = useState<string>("during");
     const [remarks, setRemarks] = useState("");
 
     const handleSave = () => {
-        onSave({ partId, level, remarks });
+        onSave({ partId, level, timing, remarks });
     };
 
     return (
@@ -47,6 +49,19 @@ export function PainInputModal({
                         <span>1 (Mild)</span>
                         <span>5 (Severe)</span>
                     </div>
+                </div>
+
+                <div className={styles.field}>
+                    <label>{t("pain_timing") || "When does it occur?"}</label>
+                    <select
+                        className={styles.select}
+                        value={timing}
+                        onChange={(e) => setTiming(e.target.value)}
+                    >
+                        <option value="during">{t("timing_during") || "During the ride"}</option>
+                        <option value="soon_after">{t("timing_soon_after") || "Soon after the ride (within hours)"}</option>
+                        <option value="days_after">{t("timing_days_after") || "Days after the ride"}</option>
+                    </select>
                 </div>
 
                 <div className={styles.field}>

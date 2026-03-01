@@ -66,7 +66,8 @@
     color: #888;
 }
 
-.textarea {
+.textarea,
+.select {
     width: 100%;
     border: 1px solid var(--surface-border);
     background: var(--background);
@@ -74,10 +75,14 @@
     border-radius: 0.5rem;
     padding: 0.75rem;
     font-family: inherit;
+}
+
+.textarea {
     resize: vertical;
 }
 
-.textarea:focus {
+.textarea:focus,
+.select:focus {
     outline: 2px solid var(--accent);
     border-color: transparent;
 }

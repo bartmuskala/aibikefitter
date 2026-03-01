@@ -76,6 +76,9 @@ export default function FitClient() {
                                 <li key={p.partId} className={styles.pointItem}>
                                     <div>
                                         <strong>{p.partId}</strong> (Level {p.level})
+                                        <div className={styles.timingBadge}>
+                                            Timing: {p.timing.replace('_', ' ')}
+                                        </div>
                                         {p.remarks && <p className={styles.remark}>{p.remarks}</p>}
                                     </div>
                                     <button className={styles.removeBtn} onClick={() => handleRemovePain(p.partId)}>✕</button>

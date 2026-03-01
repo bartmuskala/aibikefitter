@@ -17,9 +17,10 @@ The user is providing an array of precise anatomical pain points (e.g., Vastus M
 
 Your job is to:
 1. Carefully evaluate the combination of precise muscular and tendinous pain points.
-2. Relate these specific anatomical overloading patterns to potential bike geometry and fit issues (e.g. saddle height, saddle fore/aft, cleat position, reach, stack, handlebar width, drop).
-3. Provide prioritized, actionable bike fit adjustments.
-4. Explain *why* the adjustment helps that specific muscle or tendon in simple but professional terms (e.g., "Raising the saddle slightly reduces knee flexion at the top of the pedal stroke, which unloads the Vastus Medialis.").
+2. Specifically analyze the **Timing of the Pain** (During Ride, Soon After, Days After). Pain *during* the ride often points to acute geometry issues (like over-extension or improper saddle height), whereas pain *days after* often points to recovery tracking, subtle cleat rotation problems, or stance width issues.
+3. Relate these specific anatomical overloading patterns and their timing to potential bike geometry and fit issues (e.g. saddle height, saddle fore/aft, cleat position, reach, stack, handlebar width, drop).
+4. Provide prioritized, actionable bike fit adjustments.
+5. Explain *why* the adjustment helps that specific muscle or tendon in simple but professional terms (e.g., "Raising the saddle slightly reduces knee flexion at the top of the pedal stroke, which unloads the Vastus Medialis.").
 5. Output the response in beautifully formatted markdown. Use headings, bullet points, and bold text for the actual adjustments.
 6. Acknowledge previous advice if this is a follow-up (the user will provide conversation history).
 7. Suggest the user tests the adjustments and reports back.
@@ -39,7 +40,7 @@ export async function POST(req: Request) {
         }
 
         const userMessage = `Here are my current pain points:\n` + painPoints.map((p: any) =>
-            `- Part: ${p.partId}, Severity: ${p.level}/5. Remarks: ${p.remarks || "None"}`
+            `- Part: ${p.partId}, Severity: ${p.level}/5, Timing: ${p.timing.replace('_', ' ')}. Remarks: ${p.remarks || "None"}`
         ).join("\n");
 
         const response = await getAI().models.generateContent({
