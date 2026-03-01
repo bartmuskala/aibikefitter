@@ -27,7 +27,8 @@ export const authOptions: NextAuthOptions = {
             return session
         },
     },
-    pages: {
-        signIn: "/", // We will put sign-in on the landing page
-    },
+    debug: true,
+    // pages: {
+    //     signIn: "/", // We will put sign-in on the landing page
+    // },
 }
