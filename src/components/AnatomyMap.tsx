@@ -45,6 +45,59 @@ const anatomicalCategories = [
     }
 ];
 
+// Coords scaled for the 1304 x 3033 vertically stacked image
+// Anterior (Front) is on top (0% to ~50%)
+// Posterior (Back) is on bottom (~50% to 100%)
+const anatomyNodes = [
+    // --- Anterior (Front view) - Top Half ---
+    { id: "Left Sternocleidomastoid (Neck)", x: 50, y: 7 },
+    { id: "Right Sternocleidomastoid (Neck)", x: 50, y: 7 }, // Neck isn't easily split visually on this diagram
+    { id: "Left Front Deltoid", x: 62, y: 11 },
+    { id: "Right Front Deltoid", x: 38, y: 11 },
+    { id: "Left Pectoralis Major", x: 58, y: 14 },
+    { id: "Right Pectoralis Major", x: 42, y: 14 },
+    { id: "Left Biceps Brachii", x: 68, y: 19 },
+    { id: "Right Biceps Brachii", x: 32, y: 19 },
+    { id: "Rectus Abdominis (Abs)", x: 50, y: 22 },
+    { id: "Left External Oblique", x: 58, y: 23 },
+    { id: "Right External Oblique", x: 42, y: 23 },
+    { id: "Left Sartorius", x: 57, y: 31 },
+    { id: "Right Sartorius", x: 43, y: 31 },
+    { id: "Left Rectus Femoris (Quad)", x: 58, y: 35 },
+    { id: "Right Rectus Femoris (Quad)", x: 42, y: 35 },
+    { id: "Left Vastus Lateralis", x: 63, y: 36 },
+    { id: "Right Vastus Lateralis", x: 37, y: 36 },
+    { id: "Left Vastus Medialis", x: 54, y: 38 },
+    { id: "Right Vastus Medialis", x: 46, y: 38 },
+    { id: "Left Patellar Tendon", x: 56, y: 41 },
+    { id: "Right Patellar Tendon", x: 44, y: 41 },
+    { id: "Left Tibialis Anterior", x: 56, y: 45 },
+    { id: "Right Tibialis Anterior", x: 44, y: 45 },
+
+    // --- Posterior (Back view) - Bottom Half ---
+    { id: "Left Trapezius", x: 43, y: 58 },
+    { id: "Right Trapezius", x: 57, y: 58 },
+    { id: "Left Infraspinatus", x: 40, y: 61 },
+    { id: "Right Infraspinatus", x: 60, y: 61 },
+    { id: "Left Triceps Brachii", x: 32, y: 65 },
+    { id: "Right Triceps Brachii", x: 68, y: 65 },
+    { id: "Left Latissimus Dorsi", x: 42, y: 66 },
+    { id: "Right Latissimus Dorsi", x: 58, y: 66 },
+    { id: "Lower Back (Erector Spinae)", x: 50, y: 70 },
+    { id: "Left Gluteus Medius", x: 42, y: 72 },
+    { id: "Right Gluteus Medius", x: 58, y: 72 },
+    { id: "Left Gluteus Maximus", x: 44, y: 75 },
+    { id: "Right Gluteus Maximus", x: 56, y: 75 },
+    { id: "Left Hamstring", x: 44, y: 82 },
+    { id: "Right Hamstring", x: 56, y: 82 },
+    { id: "Left Gastrocnemius (Calf)", x: 44, y: 91 },
+    { id: "Right Gastrocnemius (Calf)", x: 56, y: 91 },
+    { id: "Left Soleus", x: 42, y: 94 },
+    { id: "Right Soleus", x: 58, y: 94 },
+    { id: "Left Achilles Tendon", x: 45, y: 97 },
+    { id: "Right Achilles Tendon", x: 55, y: 97 },
+];
+
 export function AnatomyMap({
     onPartClick,
     selectedParts,
@@ -91,6 +144,22 @@ export function AnatomyMap({
                                                 alt="High-Fidelity Muscular System Reference"
                                                 className={styles.baseImage}
                                             />
+                                            {anatomyNodes.map((node) => {
+                                                const isSelected = selectedParts.includes(node.id);
+                                                return (
+                                                    <div
+                                                        key={`${node.id}-${node.x}-${node.y}`}
+                                                        className={`${styles.node} ${isSelected ? styles.nodeSelected : ""}`}
+                                                        style={{ left: `${node.x}%`, top: `${node.y}%` }}
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            onPartClick(node.id);
+                                                        }}
+                                                    >
+                                                        <div className={styles.tooltip}>{node.id}</div>
+                                                    </div>
+                                                );
+                                            })}
                                         </div>
                                     </TransformComponent>
                                 </div>
