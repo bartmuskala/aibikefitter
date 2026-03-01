@@ -6,19 +6,93 @@ import { useState } from "react";
 
 type Vector3Tuple = [number, number, number];
 
-const bodyPartsList = [
-    { id: "Head", position: [0, 3.5, 0] as Vector3Tuple, scale: [0.8, 1, 0.8] as Vector3Tuple },
-    { id: "Neck", position: [0, 2.7, 0] as Vector3Tuple, scale: [0.4, 0.6, 0.4] as Vector3Tuple },
-    { id: "Torso", position: [0, 1, 0] as Vector3Tuple, scale: [1.5, 2.5, 0.8] as Vector3Tuple },
-    { id: "LeftArm", position: [-1.2, 1.5, 0] as Vector3Tuple, scale: [0.4, 2, 0.4] as Vector3Tuple },
-    { id: "RightArm", position: [1.2, 1.5, 0] as Vector3Tuple, scale: [0.4, 2, 0.4] as Vector3Tuple },
-    { id: "LeftLeg", position: [-0.6, -1.5, 0] as Vector3Tuple, scale: [0.5, 2.5, 0.5] as Vector3Tuple },
-    { id: "RightLeg", position: [0.6, -1.5, 0] as Vector3Tuple, scale: [0.5, 2.5, 0.5] as Vector3Tuple },
-    { id: "LeftKnee", position: [-0.6, -2.8, 0] as Vector3Tuple, scale: [0.55, 0.55, 0.55] as Vector3Tuple },
-    { id: "RightKnee", position: [0.6, -2.8, 0] as Vector3Tuple, scale: [0.55, 0.55, 0.55] as Vector3Tuple },
-    { id: "LowerBack", position: [0, -0.3, -0.4] as Vector3Tuple, scale: [1.2, 0.8, 0.5] as Vector3Tuple },
-    { id: "Shoulders", position: [0, 2.2, -0.2] as Vector3Tuple, scale: [1.6, 0.6, 0.6] as Vector3Tuple }
+// Anatomical Points specifically requested, mapped to 3D space.
+const painNodes = [
+    { id: "Left Trapezius", position: [-0.6, 2.7, -0.3] as Vector3Tuple },
+    { id: "Right Trapezius", position: [0.6, 2.7, -0.3] as Vector3Tuple },
+    { id: "Left Pectoralis Major", position: [-0.5, 2.0, 0.4] as Vector3Tuple },
+    { id: "Right Pectoralis Major", position: [0.5, 2.0, 0.4] as Vector3Tuple },
+    { id: "Left Internal Oblique", position: [-0.6, 0.8, 0.4] as Vector3Tuple },
+    { id: "Right Internal Oblique", position: [0.6, 0.8, 0.4] as Vector3Tuple },
+    { id: "Lower Back (Erector Spinae)", position: [0, 0.8, -0.5] as Vector3Tuple },
+    { id: "Left Gluteus Maximus", position: [-0.5, -0.2, -0.5] as Vector3Tuple },
+    { id: "Right Gluteus Maximus", position: [0.5, -0.2, -0.5] as Vector3Tuple },
+    { id: "Left Rectus Femoris (Quad)", position: [-0.6, -1.2, 0.3] as Vector3Tuple },
+    { id: "Right Rectus Femoris (Quad)", position: [0.6, -1.2, 0.3] as Vector3Tuple },
+    { id: "Left Vastus Medialis", position: [-0.3, -1.8, 0.3] as Vector3Tuple },
+    { id: "Right Vastus Medialis", position: [0.3, -1.8, 0.3] as Vector3Tuple },
+    { id: "Left Vastus Lateralis", position: [-0.9, -1.5, 0.2] as Vector3Tuple },
+    { id: "Right Vastus Lateralis", position: [0.9, -1.5, 0.2] as Vector3Tuple },
+    { id: "Left Hamstring", position: [-0.6, -1.5, -0.3] as Vector3Tuple },
+    { id: "Right Hamstring", position: [0.6, -1.5, -0.3] as Vector3Tuple },
+    { id: "Left Patellar Tendon", position: [-0.6, -2.6, 0.3] as Vector3Tuple },
+    { id: "Right Patellar Tendon", position: [0.6, -2.6, 0.3] as Vector3Tuple },
+    { id: "Left Gastrocnemius (Calf)", position: [-0.6, -3.5, -0.2] as Vector3Tuple },
+    { id: "Right Gastrocnemius (Calf)", position: [0.6, -3.5, -0.2] as Vector3Tuple },
+    { id: "Left Achilles Tendon", position: [-0.6, -4.2, -0.2] as Vector3Tuple },
+    { id: "Right Achilles Tendon", position: [0.6, -4.2, -0.2] as Vector3Tuple },
+    { id: "Left Tibialis Anterior", position: [-0.6, -3.5, 0.2] as Vector3Tuple },
+    { id: "Right Tibialis Anterior", position: [0.6, -3.5, 0.2] as Vector3Tuple },
+    { id: "Left Triceps Brachii", position: [-1.4, 1.6, -0.2] as Vector3Tuple },
+    { id: "Right Triceps Brachii", position: [1.4, 1.6, -0.2] as Vector3Tuple },
+    { id: "Left Biceps Brachii", position: [-1.4, 1.6, 0.2] as Vector3Tuple },
+    { id: "Right Biceps Brachii", position: [1.4, 1.6, 0.2] as Vector3Tuple },
+    { id: "Hands/Wrists", position: [0, -0.5, 1.2] as Vector3Tuple }, // simplified
+    { id: "Neck (Cervical Spine)", position: [0, 3.0, -0.2] as Vector3Tuple },
 ];
+
+function ModelFrame() {
+    // A simplified visual representation of the human body (Gray & slightly transparent)
+    return (
+        <group>
+            {/* Head */}
+            <mesh position={[0, 3.6, 0]}>
+                <sphereGeometry args={[0.6, 32, 32]} />
+                <meshStandardMaterial color="#888" opacity={0.3} transparent />
+            </mesh>
+            {/* Torso */}
+            <mesh position={[0, 1.4, 0]}>
+                <capsuleGeometry args={[0.8, 2.0, 4, 16]} />
+                <meshStandardMaterial color="#888" opacity={0.3} transparent />
+            </mesh>
+            {/* Pelvis/Hips */}
+            <mesh position={[0, -0.2, 0]} rotation={[0, 0, Math.PI / 2]}>
+                <capsuleGeometry args={[0.8, 0.6, 4, 16]} />
+                <meshStandardMaterial color="#888" opacity={0.3} transparent />
+            </mesh>
+            {/* Left Leg */}
+            <mesh position={[-0.6, -1.6, 0]}>
+                <capsuleGeometry args={[0.3, 1.8, 4, 16]} />
+                <meshStandardMaterial color="#888" opacity={0.3} transparent />
+            </mesh>
+            {/* Right Leg */}
+            <mesh position={[0.6, -1.6, 0]}>
+                <capsuleGeometry args={[0.3, 1.8, 4, 16]} />
+                <meshStandardMaterial color="#888" opacity={0.3} transparent />
+            </mesh>
+            {/* Left Calf */}
+            <mesh position={[-0.6, -3.5, 0]}>
+                <capsuleGeometry args={[0.25, 1.4, 4, 16]} />
+                <meshStandardMaterial color="#888" opacity={0.3} transparent />
+            </mesh>
+            {/* Right Calf */}
+            <mesh position={[0.6, -3.5, 0]}>
+                <capsuleGeometry args={[0.25, 1.4, 4, 16]} />
+                <meshStandardMaterial color="#888" opacity={0.3} transparent />
+            </mesh>
+            {/* Left Arm */}
+            <mesh position={[-1.4, 1.4, 0]}>
+                <capsuleGeometry args={[0.25, 1.6, 4, 16]} />
+                <meshStandardMaterial color="#888" opacity={0.3} transparent />
+            </mesh>
+            {/* Right Arm */}
+            <mesh position={[1.4, 1.4, 0]}>
+                <capsuleGeometry args={[0.25, 1.6, 4, 16]} />
+                <meshStandardMaterial color="#888" opacity={0.3} transparent />
+            </mesh>
+        </group>
+    );
+}
 
 export function BodyModel({
     onPartClick,
@@ -28,26 +102,28 @@ export function BodyModel({
     selectedParts: string[];
 }) {
     return (
-        <div style={{ width: "100%", height: "60vh", background: "var(--surface)", borderRadius: "1rem", border: "1px solid var(--surface-border)", overflow: "hidden" }}>
+        <div style={{ width: "100%", height: "70vh", background: "var(--surface)", borderRadius: "1rem", border: "1px solid var(--surface-border)", overflow: "hidden" }}>
             <Canvas camera={{ position: [0, 1, 8], fov: 60 }}>
-                <ambientLight intensity={0.5} />
-                <directionalLight position={[10, 10, 5]} intensity={1} />
-                <directionalLight position={[-10, 10, -5]} intensity={0.5} />
+                <ambientLight intensity={0.7} />
+                <directionalLight position={[10, 10, 5]} intensity={1.5} />
+                <directionalLight position={[-10, 10, -5]} intensity={0.8} />
 
-                <OrbitControls enablePan={false} maxPolarAngle={Math.PI / 1.5} minPolarAngle={Math.PI / 3} />
+                <OrbitControls enablePan={true} maxPolarAngle={Math.PI} minPolarAngle={0} zoomSpeed={0.8} />
 
-                {bodyPartsList.map((part) => {
-                    const isSelected = selectedParts.includes(part.id);
+                <ModelFrame />
+
+                {/* Render Pain Nodes */}
+                {painNodes.map((node) => {
+                    const isSelected = selectedParts.includes(node.id);
                     const [hovered, setHover] = useState(false);
 
                     return (
                         <mesh
-                            key={part.id}
-                            position={part.position}
-                            scale={part.scale}
+                            key={node.id}
+                            position={node.position}
                             onClick={(e) => {
                                 e.stopPropagation();
-                                onPartClick(part.id);
+                                onPartClick(node.id);
                             }}
                             onPointerOver={(e) => {
                                 e.stopPropagation();
@@ -58,16 +134,28 @@ export function BodyModel({
                                 setHover(false);
                             }}
                         >
-                            <boxGeometry args={[1, 1, 1]} />
+                            <sphereGeometry args={[isSelected ? 0.2 : hovered ? 0.15 : 0.1, 16, 16]} />
                             <meshStandardMaterial
-                                color={isSelected ? "#ef4444" : hovered ? "#3b82f6" : "#e5e7eb"}
-                                roughness={0.4}
-                                metalness={0.1}
+                                color={isSelected ? "#ef4444" : hovered ? "#3b82f6" : "#facc15"}
+                                roughness={0.3}
+                                metalness={0.5}
+                                emissive={isSelected ? "#ef4444" : "#000000"}
+                                emissiveIntensity={0.5}
                             />
-                            {isSelected && (
-                                <Html position={[0, 1.2, 0]} center>
-                                    <div style={{ background: "#ef4444", color: "white", padding: "2px 6px", borderRadius: "12px", fontSize: "12px", fontWeight: "bold" }}>
-                                        Selected
+
+                            {(isSelected || hovered) && (
+                                <Html position={[0, 0.3, 0]} center zIndexRange={[100, 0]}>
+                                    <div style={{
+                                        background: isSelected ? "#ef4444" : "rgba(0,0,0,0.8)",
+                                        color: "white",
+                                        padding: "4px 8px",
+                                        borderRadius: "6px",
+                                        fontSize: "12px",
+                                        fontWeight: "600",
+                                        whiteSpace: "nowrap",
+                                        boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)"
+                                    }}>
+                                        {node.id}
                                     </div>
                                 </Html>
                             )}
