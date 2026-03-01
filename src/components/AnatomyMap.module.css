@@ -168,10 +168,10 @@
 
 .imageContainer {
     position: relative;
-    /* Maintain fixed aspect ratio so percentage coordinates are perfectly stable */
-    width: 600px;
-    height: 1395px;
-    max-width: none;
+    /* Bind container explicitly to the intrinsic ratio to lock absolute % dot positions */
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 1304 / 3033;
     margin: 0 auto;
 }
 
